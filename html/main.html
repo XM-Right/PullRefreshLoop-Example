@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="tephone=no,email=no,date=no,address=no">
+        <style type="text/css">
+            html{ background-color: white; }
+            span {
+                padding: 10px 15px;
+                margin: 10px;
+                display: inline-block;
+                background-color: #e8e8e8;
+            }
+            .hover{ opacity: .4; }
+        </style>
+    </head>
+    <body>
+    	<article>尝试手势下拉页面或者 "手动开启加载" </article>
+        <span tapmode="hover" onclick="fnRefreshHeaderLoading()">手动开启加载</span>
+    </body>     
+</html>
+</html>
+<script type="text/javascript">
+
+    apiready = function(){
+		api.setCustomRefreshHeaderInfo({
+			bgColor : '#f5f5f5', //（可选项）字符串类型；下拉刷新的背景设置，支持rgb、rgba、#，该背景大小同当前 window 或 frame 的宽高；默认：#C0C0C0
+			image : {//JSON 对象类型；下拉刷新相关图片设置
+				icon : 'widget://image/mx.png', //（可选项）字符串类型；下拉过程中的背景图片，图片规格为正方形，如50*50、100*100，为适配高清屏幕建议开发者传大小合适的图片，若不传则不显示
+				borderColor : '#d13c2e',          //字符串类型；下拉刷新的边线颜色
+			}
+		}, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            setTimeout(function(){
+				api.refreshHeaderLoadDone()
+            }, 3000);
+		});
+	};
+
+    function randomSwitchBtn( tag ) {
+    if( tag == $api.dom('#footer li.active') );
+    var eFootLis = $api.domAll('#footer li'),
+        eHeaderLis = $api.domAll('header li'),
+        index = 0;
+    for (var i = 0,len = eFootLis.length; i < len; i++) {
+        if( tag == eFootLis[i] ){
+            index = i;
+        }else{
+            $api.removeCls(eFootLis[i], 'active');
+            $api.removeCls(eHeaderLis[i], 'active');
+        }
+    }
+    $api.addCls( eFootLis[index], 'active');
+    $api.addCls( eHeaderLis[index], 'active');
+
+
+    var want_reload = false ;
+    if( index != 0 )
+    {
+        want_reload =true ;
+    }
+    api.setFrameGroupIndex({
+        name: 'group',
+        index: index,
+        reload: want_reload
+    });
+
+
+}
+
+	function fnRefreshHeaderLoading() {
+		api.refreshHeaderLoading();
+	};
+</script>

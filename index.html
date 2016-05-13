@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+        <meta name="format-detection" content="tephone=no,email=no,date=no,address=no">
+        <style type="text/css">
+            html{ background-color: #d43e37; }
+            header{  padding: 25px 0; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>下拉加载《猫眼电影》</h1>
+            <mark>
+                使用前请详细阅读 文档 使用规则
+            </mark>
+        </header>
+    </body>     
+</html>
+<script type="text/javascript">
+    apiready = function(){
+        api.openFrame({
+            name: 'frm_main',
+            url: './html/main.html',
+            customRefreshHeader: 'pullRefreshLoop',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: document.querySelector( 'header' ).offsetHeight,
+                h: api.winHeight - document.querySelector( 'header' ).offsetHeight
+            }
+        });
+    };
+</script>
